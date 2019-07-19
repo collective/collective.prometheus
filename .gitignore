@@ -1,0 +1,15 @@
+*~
+*.egg-info
+*.mo
+*.pyc
+.installed.cfg
+.project
+.pydevproject
+.tmp*
+bin/
+coverage/
+develop-eggs/
+dist
+eggs/
+parts/
+var/
