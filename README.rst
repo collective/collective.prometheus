@@ -2,7 +2,7 @@
 Prometheus Plone Integration
 ============================
 
-This package publishes Plone statistics in a format that can be consumed by Prometheus.
+This package publishes Plone statistics in a format that can be consumed by Prometheus_.
 
 It was largely based on ``munin.zope``. See https://pypi.org/project/munin.zope/
 
@@ -24,3 +24,5 @@ If so, add a job to your ``scrape_configs`` in ``pometheus.yaml``:
       metrics_path: '/@@metrics'
       static_configs:
       - targets: ['localhost:8000']
+
+.. _Prometheus: https://prometheus.io/
