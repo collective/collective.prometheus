@@ -29,7 +29,7 @@ setup(
     keywords='plone zope prometheus monitoring',
     author='Rob McBroom',
     author_email='rob@sixfeetup.com',
-    url='TBD',
+    url='https://github.com/collective/collective.prometheus',
     license='GPL',
     packages=find_packages('src'),
     package_dir={'': 'src'},
