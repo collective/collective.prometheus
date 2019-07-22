@@ -25,6 +25,7 @@ class Prometheus(BrowserView):
         result.extend(self.zopethreads())
         result.extend(self.zopecache())
         result.extend(self.zodbactivity())
+        result.extend(self.zopeconnections())
         return ''.join(result)
 
     def _getdbs(self):
@@ -118,3 +119,28 @@ class Prometheus(BrowserView):
                 'gauge', 'ZODB connections'
             ),
         ]
+
+    def _zopeconnections(self, db, suffix):
+        zodb = db._p_jar.db()
+        result = []
+        for conn_data in zodb.cacheDetailSize():
+            conn_str = conn_data['connection']
+            conn_id = conn_str.strip('<>').split()[-1]
+            total = conn_data.get('size', 0)
+            active = metric(
+                'zope_connection_' + conn_id + '_active_objects',
+                conn_data.get('ngsize', 0), 'guage', 'Active Zope Objects'
+            )
+            result.append(active)
+            total = metric(
+                'zope_connection_' + conn_id + '_total_objects',
+                conn_data.get('size', 0), 'guage', 'Total Zope Objects'
+            )
+            result.append(total)
+        return result
+
+    def zopeconnections(self):
+        result = []
+        for (db, suffix) in self._getdbs():
+            result.extend(self._zopeconnections(db, suffix))
+        return result
