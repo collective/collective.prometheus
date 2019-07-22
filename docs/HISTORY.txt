@@ -1,0 +1,7 @@
+1.1
+
+  * Add per connection caches active and total object counts
+
+1.0
+
+  * Initial release
