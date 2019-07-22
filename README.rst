@@ -6,6 +6,19 @@ This package publishes Plone statistics in a format that can be consumed by Prom
 
 It was largely based on ``munin.zope``. See https://pypi.org/project/munin.zope/
 
+It provides the following data:
+
+  * The number of running Zope threads
+  * The number of Zope threads not in use
+  * The number of objects in the Zope cache
+  * Memory used by the Zope cache
+  * The number of objects that can be stored in the Zope cache
+  * ZODB load count
+  * ZODB store count
+  * ZODB connections
+  * Active Zope Objects
+  * Total Zope Objects
+
 Installation (using Buildout)
 -----------------------------
 
