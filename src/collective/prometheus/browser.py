@@ -123,17 +123,19 @@ class Prometheus(BrowserView):
     def _zopeconnections(self, db, suffix):
         zodb = db._p_jar.db()
         result = []
-        for conn_data in zodb.cacheDetailSize():
-            conn_str = conn_data['connection']
-            conn_id = conn_str.strip('<>').split()[-1]
+        # try to keep the results in a consistent order
+        sorted_cache_details = sorted(
+            zodb.cacheDetailSize(), key=lambda m: m['connection']
+        )
+        for (conn_id, conn_data) in enumerate(sorted_cache_details):
             total = conn_data.get('size', 0)
             active = metric(
-                'zope_connection_' + conn_id + '_active_objects',
+                'zope_connection_{}_active_objects'.format(conn_id),
                 conn_data.get('ngsize', 0), 'guage', 'Active Zope Objects'
             )
             result.append(active)
             total = metric(
-                'zope_connection_' + conn_id + '_total_objects',
+                'zope_connection_{}_total_objects'.format(conn_id),
                 conn_data.get('size', 0), 'guage', 'Total Zope Objects'
             )
             result.append(total)
