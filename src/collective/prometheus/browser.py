@@ -131,12 +131,12 @@ class Prometheus(BrowserView):
             total = conn_data.get('size', 0)
             active = metric(
                 'zope_connection_{}_active_objects'.format(conn_id),
-                conn_data.get('ngsize', 0), 'guage', 'Active Zope Objects'
+                conn_data.get('ngsize', 0), 'gauge', 'Active Zope Objects'
             )
             result.append(active)
             total = metric(
                 'zope_connection_{}_total_objects'.format(conn_id),
-                conn_data.get('size', 0), 'guage', 'Total Zope Objects'
+                conn_data.get('size', 0), 'gauge', 'Total Zope Objects'
             )
             result.append(total)
         return result
