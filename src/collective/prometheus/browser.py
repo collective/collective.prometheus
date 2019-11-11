@@ -1,9 +1,13 @@
 import sys
 from time import time
 
-import ZServer.PubCore
 from Products.Five.browser import BrowserView
 from zExceptions import NotFound
+try:
+    import ZServer.PubCore
+    Z_SERVER = True
+except Exception:
+    Z_SERVER = False
 
 
 def metric(name, value, metric_type=None, help_text=None):
@@ -22,7 +26,8 @@ class Prometheus(BrowserView):
 
     def __call__(self, *args, **kwargs):
         result = []
-        result.extend(self.zopethreads())
+        if Z_SERVER:
+            result.extend(self.zopethreads())
         result.extend(self.zopecache())
         result.extend(self.zodbactivity())
         result.extend(self.zopeconnections())

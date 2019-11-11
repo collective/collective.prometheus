@@ -8,8 +8,8 @@ It was largely based on ``munin.zope``. See https://pypi.org/project/munin.zope/
 
 It provides the following data:
 
-  * The number of running Zope threads
-  * The number of Zope threads not in use
+  * The number of running Zope threads (if `ZServer` is available)
+  * The number of Zope threads not in use (if `ZServer` is available)
   * The number of objects in the Zope cache
   * Memory used by the Zope cache
   * The number of objects that can be stored in the Zope cache
