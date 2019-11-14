@@ -6,7 +6,7 @@ version = '1.3.0'
 readme = open("README.rst").read()
 history = open(join('docs', 'HISTORY.txt')).read()
 
-install_requires = ['setuptools', 'Products.ZServerViews>=0.2']
+install_requires = ['setuptools']
 if sys.version_info < (2, 5):
     install_requires.append('threadframe')
 
@@ -39,6 +39,7 @@ setup(
     zip_safe=False,
     install_requires=install_requires,
     extras_require={
+        'zserver': ['Products.ZServerViews>=0.2'],
         'test': ['plone.app.testing'],
     },
     entry_points="""

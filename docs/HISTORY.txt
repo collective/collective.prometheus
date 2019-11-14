@@ -1,6 +1,7 @@
 1.3.0
 
-  * Fail gracefully when ZServer isn’t available
+  * Zope 4 compatibility, make ZServer monitoring optional with the `zserver`
+    extra
 
 1.2.1
 
