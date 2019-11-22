@@ -109,7 +109,11 @@ class Prometheus(BrowserView):
         start = now - 15  # Prometheus polls every 15 seconds
         end = now
         params = dict(chart_start=start, chart_end=end)
-        chart = db.getActivityChartData(200, params)
+        try:
+            chart = db.getActivityChartData(200, params)
+        except AttributeError:
+            # RelStorage doesn't provide getActivityChartData()
+            return []
         return [
             metric(
                 'zodb_load_count' + suffix, chart['total_load_count'],
