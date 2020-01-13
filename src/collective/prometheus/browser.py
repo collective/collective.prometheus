@@ -109,11 +109,12 @@ class Prometheus(BrowserView):
         now = time()
         start = now - 15  # Prometheus polls every 15 seconds
         end = now
-        params = dict(chart_start=start, chart_end=end)
         zodb = db._getDB()
         if zodb.getActivityMonitor() is None:
             zodb.setActivityMonitor(ActivityMonitor())
-        data = zodb.getActivityMonitor().getActivityAnalysis(start=start, end=end, divisions=1)[0]
+        data = zodb.getActivityMonitor().getActivityAnalysis(
+            start=start, end=end, divisions=1
+        )[0]
         return [
             metric(
                 'zodb_connections' + suffix, data['connections'],
