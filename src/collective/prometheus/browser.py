@@ -3,6 +3,7 @@ from time import time
 
 from Products.Five.browser import BrowserView
 from zExceptions import NotFound
+from ZODB.ActivityMonitor import ActivityMonitor
 try:
     import ZServer.PubCore
     Z_SERVER = True
@@ -109,23 +110,22 @@ class Prometheus(BrowserView):
         start = now - 15  # Prometheus polls every 15 seconds
         end = now
         params = dict(chart_start=start, chart_end=end)
-        try:
-            chart = db.getActivityChartData(200, params)
-        except AttributeError:
-            # RelStorage doesn't provide getActivityChartData()
-            return []
+        zodb = db._getDB()
+        if zodb.getActivityMonitor() is None:
+            zodb.setActivityMonitor(ActivityMonitor())
+        data = zodb.getActivityMonitor().getActivityAnalysis(start=start, end=end, divisions=1)[0]
         return [
             metric(
-                'zodb_load_count' + suffix, chart['total_load_count'],
+                'zodb_connections' + suffix, data['connections'],
+                'gauge', 'ZODB connections'
+            ),
+            metric(
+                'zodb_load_count' + suffix, data['loads'],
                 'counter', 'ZODB load count'
             ),
             metric(
-                'zodb_store_count' + suffix, chart['total_store_count'],
+                'zodb_store_count' + suffix, data['stores'],
                 'counter', 'ZODB store count'
-            ),
-            metric(
-                'zodb_connections' + suffix, chart['total_connections'],
-                'gauge', 'ZODB connections'
             ),
         ]
 
