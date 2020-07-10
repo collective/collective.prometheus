@@ -122,11 +122,11 @@ class Prometheus(BrowserView):
             ),
             metric(
                 'zodb_load_count' + suffix, data['loads'],
-                'counter', 'ZODB load count'
+                'gauge', 'ZODB load count'
             ),
             metric(
                 'zodb_store_count' + suffix, data['stores'],
-                'counter', 'ZODB store count'
+                'gauge', 'ZODB store count'
             ),
         ]
 
