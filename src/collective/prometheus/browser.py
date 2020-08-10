@@ -85,8 +85,8 @@ class Prometheus(BrowserView):
     def _zopecache(self, db, suffix):
         return [
             metric(
-                'zope_cache_objects' + suffix, db.database_size(), 'gauge',
-                'The number of objects in the Zope cache',
+                'zope_total_objects' + suffix, db.database_size(), 'gauge',
+                'The number of objects in the Zope database',
             ),
             metric(
                 'zope_cache_memory' + suffix, db.cache_length(), 'gauge',
