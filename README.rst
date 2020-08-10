@@ -10,7 +10,7 @@ It provides the following data:
 
   * The number of running Zope ZServer threads (with the `zserver` extra)
   * The number of Zope ZServer threads not in use (with the `zserver` extra)
-  * The number of objects in the Zope cache
+  * The number of objects in the Zope database
   * Memory used by the Zope cache
   * The number of objects that can be stored in the Zope cache
   * ZODB load count

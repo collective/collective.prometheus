@@ -1,3 +1,7 @@
+1.6.0
+
+  * rename zope_cache_objects to zope_total_objects to better reflect what it shows
+
 1.5.0
 
   * Change zodb_load_count and zodb_store_count from Counter to Guage
