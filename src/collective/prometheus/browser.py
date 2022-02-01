@@ -11,7 +11,7 @@ except Exception:
     Z_SERVER = False
 
 
-def metric(name, value, metric_type=None, help_text=None):
+def metric(name, value, metric_type=None, help_text=None, thread=None):
     HELP_TMPL = '# HELP {0} {1}\n'
     TYPE_TMPL = '# TYPE {0} {1}\n'
     output = ''
@@ -19,6 +19,8 @@ def metric(name, value, metric_type=None, help_text=None):
         output += HELP_TMPL.format(name, help_text)
     if metric_type is not None:
         output += TYPE_TMPL.format(name, metric_type)
+    if thread:
+        name = name + '{thread="' + str(thread) + '"}'
     output += '{0} {1}\n'.format(name, value)
     return output
 
@@ -140,13 +142,15 @@ class Prometheus(BrowserView):
         for (conn_id, conn_data) in enumerate(sorted_cache_details):
             total = conn_data.get('size', 0)
             active = metric(
-                'zope_connection_{}_active_objects'.format(conn_id),
-                conn_data.get('ngsize', 0), 'gauge', 'Active Zope Objects'
+                'zope_connection_active_objects',
+                conn_data.get('ngsize', 0), 'gauge', 'Active Zope Objects',
+                thread=conn_id,
             )
             result.append(active)
             total = metric(
-                'zope_connection_{}_total_objects'.format(conn_id),
-                conn_data.get('size', 0), 'gauge', 'Total Zope Objects'
+                'zope_connection_total_objects',
+                conn_data.get('size', 0), 'gauge', 'Total Zope Objects',
+                thread=conn_id,
             )
             result.append(total)
         return result
