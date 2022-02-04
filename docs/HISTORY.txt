@@ -1,3 +1,8 @@
+1.6.1
+
+  * Fix metric naming for thread-local metrics
+    [Rudd-O]
+
 1.6.0
 
   * rename zope_cache_objects to zope_total_objects to better reflect what it shows
